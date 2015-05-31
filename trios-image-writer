@@ -1,12 +1,12 @@
 #!/bin/bash
 #
 #######################################################################
-# TRIOS Image writer												  #
+# TRIOS Image writer                                                  #
 # Simple dd wrapper. Uses zenity for GUI dialogs and pv for progress. #
-#																	  #
-# 2015 Filip Danilovic <filip@openmailbox.org>						  #
-#																	  #
-# This is free software. Licenced under GPL v2 or later. :)			  #
+#                                                                     #
+# 2015 Filip Danilovic <filip@openmailbox.org>                        #
+#                                                                     #
+# This is free software. Licenced under GPL v2 or later. :)           #
 #######################################################################
 
 show_usage() {
