@@ -1,2 +1,2 @@
 # trios-image-writer
-GUI wrapper for dd. :)
+Simple dd wrapper. Uses zenity for GUI dialogs and pv for progress.
