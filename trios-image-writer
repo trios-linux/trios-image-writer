@@ -39,10 +39,6 @@ while getopts "h?f:d:" arg; do
 	esac
 done
 
-if [[ $EUID -ne 0 ]]; then
-   zenity --error --title="Error" --text="This program must be run as root!!"
-   exit 1
-fi
 
 if [ -z "$ISO" ]; then
 	ISO=$(zenity --file-selection --title="Select image to write:")
@@ -83,7 +79,7 @@ check() {
 <b><u>Start writing?</u></b>")"
 
 	if [[ $? == 0 ]] ; then
-		write
+		write $ISO $SIZE $USB
 	fi
 }
 
@@ -94,9 +90,8 @@ check() {
 
 write() {
 
-	(dd if=$ISO | pv -n -s $SIZE | dd of=$USB bs=4M oflag=dsync) 2>&1 | \
-	zenity --title="TRIOS Image writer" --text="Writing:" --no-cancel \
-			--width=300 --ok-label=Finish --progress 
+	`dirname $0`/tiw-worker $1 $2 $3
+
 }
 #-------------------
 
