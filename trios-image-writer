@@ -12,7 +12,8 @@
 show_usage() {
 			
 	echo -e "\n*******************\nTRIOS Image Writer:\n*******************\n"
-	echo -e "Asks the user to select an image file and a destination drive,\nthen, while showing progress, writes that image to it using good old dd. :)"
+	echo -e "Asks the user to select an image file and a destination drive,
+then, while showing progress, writes that image to it using good old dd. :)"
 	echo -e "\nAccepts the following arguments:"
 	echo " -f /path/to/image/file"
 	echo " -d /dev/sdX"
@@ -57,7 +58,12 @@ SIZE=$(du -h -B1 $ISO | awk '{print $1}')
 
 drive_select() {
 
-	USB=$(zenity --entry --ok-label=Continue --cancel-label=Quit --title="Select the drive to write to:" --entry-text=/dev/ --text="$(echo "Selected image is:\n$ISO\n" && echo "Find the target USB drive on the list bellow,\nthen enter it's node in the \"/dev/sdX\" format.\n" && lsblk -o NAME,MODEL,VENDOR,SIZE)")
+	USB=$(zenity --entry --ok-label=Continue --cancel-label=Quit \
+		--title="Select the drive to write to:" --entry-text=/dev/ \
+		--text="$(echo "Selected image is:\n$ISO\n" \
+&& echo "Find the target USB drive on the list bellow,
+then enter it's node in the \"/dev/sdX\" format.\n" \
+&& lsblk -o NAME,MODEL,VENDOR,SIZE)")
 
 	if [ -z $USB ] ; then
 		exit
@@ -71,7 +77,11 @@ fi
 check() {
 
 	USB_INFO=$(lsblk $USB -o NAME,MODEL,VENDOR,SIZE)
-	zenity --question --default-cancel --title="Safety check" --text="$(echo "<b>Selected image is:</b>\n$ISO" && echo "\n<b>Destination drive is \"$USB\".</b>\nDetails: \n$USB_INFO" && echo "\n<b><u>Start writing?</u></b>")"
+	zenity --question --default-cancel --title="Safety check" \
+		--text="$(echo "<b>Selected image is:</b>\n$ISO" && echo "\n
+<b>Destination drive is \"$USB\".</b>\nDetails: \n$USB_INFO" && echo "\n
+<b><u>Start writing?</u></b>")"
+
 	if [[ $? == 0 ]] ; then
 		write
 	fi
@@ -84,16 +94,21 @@ check() {
 
 write() {
 
-	(dd if=$ISO | pv -n -s $SIZE | dd of=$USB bs=4M oflag=dsync) 2>&1 | zenity --title="TRIOS Image writer" --text="Writing:" --no-cancel --width=300 --ok-label=Finish --progress 
+	(dd if=$ISO | pv -n -s $SIZE | dd of=$USB bs=4M oflag=dsync) 2>&1 | \
+	zenity --title="TRIOS Image writer" --text="Writing:" --no-cancel \
+			--width=300 --ok-label=Finish --progress 
 }
 #-------------------
 
 if [ -b "$USB" ] ; then
 	check
+elif [[ $USB == "/dev/null" ]]; then
+	check
 else
 	while [ ! -b "$USB" ]
 	do
-	zenity --question --ok-label=Retry --cancel-label=Quit --title="Error" --text="$(echo "<b>\"$USB\" doesn\'t exist!</b>\nCheck your input.")"
+	zenity --question --ok-label=Retry --cancel-label=Quit --title="Error" \
+		--text="$(echo "<b>\"$USB\" doesn\'t exist!</b>\nCheck your input.")"
 	if [[ $? == 0 ]]; then
 		drive_select
 	else
