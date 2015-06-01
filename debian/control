@@ -1,0 +1,17 @@
+Source: trios-image-writer
+Section: misc
+Priority: optional
+Maintainer: Filip Danilovic <filip@openmailbox.org>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.9.6
+
+Package: trios-image-writer
+Architecture: all
+Section: misc
+Priority: optional
+Depends: ${misc:Depends}, coreutils (>= 7.4), bash (>= 4.1), pv, zenity
+Description: Simple image writer (dd wrapper). 
+ Asks the user to select an image file and a destination drive,
+ then, while showing progress, writes that image to it using good old dd.
+ .
+ Uses zenity for GUI dialogs and pv for progress.

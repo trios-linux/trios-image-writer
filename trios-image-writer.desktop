@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=TRIOS Image Writer
+Name[sr@latin]=TRIOS Snimač Slika
+Name[sr]=ТРИОС Снимач Слика
+TryExec=trios-image-writer
+Exec=/usr/share/trios-image-writer/trios-image-writer
+Icon=drive-removable-media-usb
+Categories=GTK;System;

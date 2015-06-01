@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+if [ -h /usr/bin/trios-image-writer ]; then
+	rm /usr/bin/trios-image-writer && echo "Symlink removed"
+else
+   echo "Symlink not found, skipping."
+fi
+exit
