@@ -3,7 +3,7 @@
 set -e
 
 if [ ! -f /usr/bin/trios-image-writer ]; then
-	ln -s /usr/share/trios-image-writer/trios-image-writer /usr/bin/trios-image-writer
+	ln -s /usr/share/trios-image-writer/trios-image-writer /usr/bin/trios-image-writer && echo "Symlink created at /usr/bin/"
 else
    echo "Symlink already exists, skipping."
 fi

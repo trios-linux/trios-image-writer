@@ -1,4 +1,4 @@
-trios-test-package - Almost empty package, meant for testing Jenkins config.
+trios-image-writer - Simple image writer (dd wrapper).
 Copyright (C) 2015  Filip Danilovic <filip@openmailbox.org>
 
     This program is free software: you can redistribute it and/or modify

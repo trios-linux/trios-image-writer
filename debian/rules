@@ -9,9 +9,5 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-#	dh_install
-#	mkdir -p $(CURDIR)/debian/trios-test-package/usr/share/trios-test-package
-#	cp -r $(CURDIR)/trios-test-pkg.homer $(CURDIR)/debian/trios-test-package/usr/share/trios-test-package
-
 %:
 	dh $@
