@@ -25,7 +25,7 @@ then, while showing progress, writes that image to it using good old dd. :)"
 while getopts "h?f:d:" arg; do
     case "$arg" in
 		f)
-		ISO=$OPTARG
+		ISO="$OPTARG"
 		;;
 		d)
 		USB=$OPTARG
@@ -47,7 +47,7 @@ if [ -z "$ISO" ]; then
 	fi
 fi
 
-SIZE=$(du -h -B1 $ISO | awk '{print $1}')
+SIZE=$(du -h -B1 "$ISO" | awk '{print $1}')
 
 
 # zenity --info --text="$(echo "$SIZE\n$ISO")"
@@ -61,7 +61,7 @@ drive_select() {
 then enter it's node in the \"/dev/sdX\" format.\n" \
 && lsblk -o NAME,MODEL,VENDOR,SIZE)")
 
-	if [ -z $USB ] ; then
+	if [ -z "$USB" ] ; then
 		exit
 	fi
 }
@@ -72,14 +72,14 @@ fi
 
 check() {
 
-	USB_INFO=$(lsblk $USB -o NAME,MODEL,VENDOR,SIZE)
+	USB_INFO=$(lsblk "$USB" -o NAME,MODEL,VENDOR,SIZE)
 	zenity --question --default-cancel --title="Safety check" \
 		--text="$(echo "<b>Selected image is:</b>\n$ISO" && echo "\n
 <b>Destination drive is \"$USB\".</b>\nDetails: \n$USB_INFO" && echo "\n
 <b><u>Start writing?</u></b>")"
 
 	if [[ $? == 0 ]] ; then
-		write $ISO $SIZE $USB
+		write "$ISO" "$SIZE" "$USB"
 	fi
 }
 
@@ -90,14 +90,14 @@ check() {
 
 write() {
 
-	`dirname $0`/tiw-worker $1 $2 $3
+	`dirname $0`/tiw-worker "$1" "$2" "$3"
 
 }
 #-------------------
 
 if [ -b "$USB" ] ; then
 	check
-elif [[ $USB == "/dev/null" ]]; then
+elif [[ "$USB" == "/dev/null" ]]; then
 	check
 else
 	while [ ! -b "$USB" ]
