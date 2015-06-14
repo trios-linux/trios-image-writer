@@ -22,11 +22,11 @@ if (($EUID != 0)); then
 fi
 
 if (($EUID == 0)); then
-	(dd if=$1 | pv -n -s $2 | dd of=$3 bs=4M oflag=dsync) 2>&1 | \
+	(dd if="$1" | pv -n -s "$2" | dd of="$3" bs=4M oflag=dsync) 2>&1 | \
 	zenity --title="TRIOS Image writer" --text="$(echo -e "Writing `basename $1`:")" --no-cancel \
 			--width=300 --ok-label=Finish --progress
 	echo -e "\n "
-	echo $1 $2 $3
+	echo "Writing \"$1\", size \"$2\" to \"$3\"
 	exit
 else
 	if [[ -t 1 ]]; then
