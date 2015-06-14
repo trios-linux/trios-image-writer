@@ -39,6 +39,23 @@ while getopts "h?f:d:" arg; do
 	esac
 done
 
+# Check zenity version:
+
+ZENITY_V_MAJOR=`zenity --version | cut -d. -f1`
+ZENITY_V_MINOR=`zenity --version | cut -d. -f2`
+
+ZENITY_DEF_CANCEL=" "
+
+echo -e "\nUsing zenity v$ZENITY_V_MAJOR.$ZENITY_V_MINOR.*\n"
+
+if [ -z $ZENITY_V_MAJOR ]; then
+	echo -e "\n!!!Zenity did not return it's version! It's probably not installed!!!\n"
+	exit
+fi
+
+if [ "$ZENITY_V_MAJOR" -eq "3" -a "$ZENITY_V_MINOR" -ge "12" ]; then
+	ZENITY_DEF_CANCEL="--default-cancel"
+fi
 
 if [ -z "$ISO" ]; then
 	ISO=$(zenity --file-selection --title="Select image to write:")
@@ -73,7 +90,7 @@ fi
 check() {
 
 	USB_INFO=$(lsblk "$USB" -o NAME,MODEL,VENDOR,SIZE)
-	zenity --question --default-cancel --title="Safety check" \
+	zenity --question "$ZENITY_DEF_CANCEL" --title="Safety check" \
 		--text="$(echo "<b>Selected image is:</b>\n$ISO" && echo "\n
 <b>Destination drive is \"$USB\".</b>\nDetails: \n$USB_INFO" && echo "\n
 <b><u>Start writing?</u></b>")"
