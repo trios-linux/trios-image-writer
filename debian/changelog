@@ -1,3 +1,6 @@
+trios-image-writer (0.1.2) stable; urgency=medium
+ * Test
+
 trios-image-writer (0.1.1) stable; urgency=medium
 
   * Add .desktop file.
